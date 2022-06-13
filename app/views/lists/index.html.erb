@@ -1,0 +1,26 @@
+<div class="navbar-lewagon">
+  <ul>
+    <li style="float:right"><%= link_to "New List", new_list_path %></li>
+    <li style="float:right"><%= link_to "My List", lists_path %></li>
+  </ul>
+</div>
+<div class="banner">
+  <span data-controller="typed-js"></span>
+</div>
+
+<div class="container">
+  <div class="d-flex align-items-center">
+    <div class="row">
+      <div class="header">
+        <h1>My Lists</h1>
+        <button type="button" class="btn btn-success"><%= link_to "Create a movie list", new_list_path %></button>
+      </div>
+        <% @lists.each do |list| %>
+          <div class="card col-sm-6">
+            <h2><%= link_to list.name, list_path(list) %></h2>
+            <img src="<%=list.bookmarks[0].movie.poster_url%>"alt="Movie Poster">
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

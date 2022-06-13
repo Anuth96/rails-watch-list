@@ -1,0 +1,32 @@
+<div class="navbar-lewagon">
+  <ul>
+    <li style="float:right"><%= link_to "New List", new_list_path %></li>
+    <li style="float:right"><%= link_to "My List", lists_path %></li>
+  </ul>
+</div>
+<div class="banner">
+  <h1><%= @list.name %></h1>
+</div>
+<div class="container">
+  <div class="d-flex align-items-center">
+    <div class="card-large row">
+      <div class="header">
+        <button type="button" class="btn btn-success"><%= link_to "Add a movie", new_list_path %></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+    <ul class="list-group">
+    <% @list.bookmarks.each do |bookmark| %>
+      <li class="list-group-item"><%= bookmark.comment%>
+      <li class="list-group-item">IMDB Rating: <%=bookmark.movie.rating%> ⭐️
+      <li class="list-group-item"><img src="<%=bookmark.movie.poster_url%>" alt="Movie Poster" width=200 height=300>
+      </li>
+    <% end %>
+  </ul>
+  <%= link_to 'Add a movie', new_list_bookmark_path(@list) %>
+  <p><%= link_to "Back to list", lists_path %></p>
