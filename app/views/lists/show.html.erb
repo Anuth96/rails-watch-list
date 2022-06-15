@@ -4,29 +4,52 @@
     <li style="float:right"><%= link_to "My List", lists_path %></li>
   </ul>
 </div>
-<div class="banner">
+<div class="show-banner">
   <h1><%= @list.name %></h1>
 </div>
-<div class="container">
-  <div class="d-flex align-items-center">
-    <div class="card-large row">
-      <div class="header">
-        <button type="button" class="btn btn-success"><%= link_to "Add a movie", new_list_path %></button>
+  <div class="show-header d-flex flex-row-reverse">
+    <button type="button" class="btn btn-success"><%= link_to 'Add a movie', new_list_bookmark_path(@list) %></button>
+  </div>
+
+<div class="container-large-cards">
+  <% @list.bookmarks.each do |bookmark| %>
+    <div class='card-large'>
+      <div class='card_left'>
+        <img src="<%=bookmark.movie.poster_url%>"alt="Movie Poster">
+      </div>
+      <div class='card_right'>
+        <h1><%= bookmark.movie.title %></h1>
+        <div class='card_right__details'>
+          <ul>
+            <li>IMDB Rating: <%=bookmark.movie.rating%> ⭐️</li>
+          </ul>
+          <div class='card_right__review'>
+              <p><%= truncate(bookmark.movie.overview, :length => 230) %></p>
+              <p><i class="fas fa-quote-left"></i> <strong><%= bookmark.comment %></strong></p>
+          <div class='card_right__button'>
+             <a <%= bookmark.movie %>
+              <%= link_to "Remove",
+                  bookmark_path(bookmark),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %>>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>
 
-
-</div>
-
-    <ul class="list-group">
-    <% @list.bookmarks.each do |bookmark| %>
-      <li class="list-group-item"><%= bookmark.comment%>
-      <li class="list-group-item">IMDB Rating: <%=bookmark.movie.rating%> ⭐️
-      <li class="list-group-item"><img src="<%=bookmark.movie.poster_url%>" alt="Movie Poster" width=200 height=300>
-      </li>
+<div class="reviews-container">
+<h1>Reviews</h1>
+  <ul class="list-group">
+    <% @list.reviews.each do |review| %>
+    <li class="list-group-item"><%= review.content%>
+    <%= '⭐️' * review.rating %>
+    </li>
     <% end %>
   </ul>
-  <%= link_to 'Add a movie', new_list_bookmark_path(@list) %>
-  <p><%= link_to "Back to list", lists_path %></p>
+<button type="button" class="btn btn-success"><%= link_to 'Leave a review', new_list_review_path(@list) %></button>
+
+
+</div>
